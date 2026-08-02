@@ -5,8 +5,6 @@ import Register from "./Register";
 import { register } from "../../api";
 import { useNavigate } from "react-router";
 
-// TODO: testing register api by mocking in current tests?
-
 vi.mock("../../api", () => ({
         register: vi.fn(),
 }));

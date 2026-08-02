@@ -11,9 +11,22 @@ export const register = async (username, password, passwordConfirm) => {
                 }),
         });
 
-        console.log(res);
-
         if (!res.ok) {
                 throw new Error(`Failed to register user: ${res.status}`);
+        }
+};
+
+export const login = async (username, password) => {
+        const res = await fetch(`${API_URL}/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                        username,
+                        password,
+                }),
+        });
+
+        if (!res.ok) {
+                throw new Error(`Failed to log in user: ${res.status}`);
         }
 };
