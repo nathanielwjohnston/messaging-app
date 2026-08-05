@@ -1,14 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useOutletContext } from "react-router";
 import { register } from "../../api";
 
 function Register() {
+        const { auth, changeAuth } = useOutletContext();
+
         const [username, setUsername] = useState("");
         const [password, setPassword] = useState("");
         const [passwordConfirm, setPasswordConfirm] = useState("");
         const [error, setError] = useState(null);
 
         let navigate = useNavigate();
+
+        if (auth) navigate("/");
 
         function updateUsername(e) {
                 setUsername(e.target.value);
@@ -37,6 +42,7 @@ function Register() {
                         await register(username, password, passwordConfirm);
 
                         // Would throw error if failed fetch
+                        changeAuth("true");
                         navigate("/");
                 } catch (error) {
                         setError(error);
