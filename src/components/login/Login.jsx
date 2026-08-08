@@ -4,15 +4,13 @@ import { useOutletContext } from "react-router";
 import { login } from "../../api";
 
 function Login() {
-        const { auth, changeAuth } = useOutletContext();
+        const { changeAuth } = useOutletContext();
 
         const [username, setUsername] = useState("");
         const [password, setPassword] = useState("");
         const [error, setError] = useState(null);
 
         let navigate = useNavigate();
-
-        if (auth) navigate("/");
 
         function updateUsername(e) {
                 setUsername(e.target.value);
