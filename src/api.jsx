@@ -59,3 +59,5 @@ export const logout = async () => {
                 throw new Error(`Failed to log out user: ${res.status}`);
         }
 };
+
+export const getUsersChats = async () => {};

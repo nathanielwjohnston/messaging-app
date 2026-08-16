@@ -1,20 +1,26 @@
-import { vi, describe, it, expect } from "vitest";
+import { vi, describe, it, expect, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Register from "./Register";
 import { register } from "../../api";
-import { useNavigate } from "react-router";
+import { useNavigate, useOutletContext } from "react-router";
 
 vi.mock("../../api", () => ({
         register: vi.fn(),
 }));
 
-vi.mock("react-router", () => ({
-        ...vi.importActual("react-router"),
-        useNavigate: vi.fn(),
-}));
+vi.mock("react-router", async (importOriginal) => {
+        const actual = await importOriginal();
+
+        return { ...actual, useOutletContext: vi.fn(), useNavigate: vi.fn() };
+});
+
+// TODO: error testing?
 
 describe("Register component", () => {
+        beforeEach(() => {
+                useOutletContext.mockReturnValue({ changeAuth: vi.fn() });
+        });
         it("displays form", () => {
                 render(<Register />);
 

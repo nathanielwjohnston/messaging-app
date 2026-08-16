@@ -45,6 +45,8 @@ function App() {
         };
 
         // TODO: is this auth checking really right?
+        // Plus, might not need to send auth itself round
+        // the children?
 
         return <Outlet context={{ auth, changeAuth, userId }} />;
 }

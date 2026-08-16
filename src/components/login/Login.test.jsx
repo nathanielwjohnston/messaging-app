@@ -1,20 +1,26 @@
-import { vi, describe, it, expect } from "vitest";
+import { vi, describe, it, expect, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Login from "./Login";
 import { login } from "../../api";
-import { useNavigate } from "react-router";
+import { useNavigate, useOutletContext } from "react-router";
 
 vi.mock("../../api", () => ({
         login: vi.fn(),
 }));
 
-vi.mock("react-router", () => ({
-        ...vi.importActual("react-router"),
-        useNavigate: vi.fn(),
-}));
+vi.mock("react-router", async (importOriginal) => {
+        const actual = await importOriginal();
+
+        return { ...actual, useOutletContext: vi.fn(), useNavigate: vi.fn() };
+});
+
+// TODO: error testing?
 
 describe("Login component", () => {
+        beforeEach(() => {
+                useOutletContext.mockReturnValue({ changeAuth: vi.fn() });
+        });
         it("displays form", () => {
                 render(<Login />);
 
@@ -31,6 +37,8 @@ describe("Login component", () => {
         });
 
         it("will not submit without all required fields", async () => {
+                // Probably not even needed because I don't
+                // check navigate being called in this test
                 const navigate = vi.fn();
                 useNavigate.mockReturnValue(navigate);
 
