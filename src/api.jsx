@@ -61,3 +61,32 @@ export const logout = async () => {
 };
 
 export const getUsersChats = async () => {};
+
+export const getUsers = async () => {
+        const res = await fetch(`${API_URL}/users`, {
+                credentials: "include",
+        });
+
+        if (!res.ok) {
+                throw new Error(`Failed to get users: ${res.status}`);
+        }
+
+        return res;
+};
+
+export const createChat = async (recipientId) => {
+        const res = await fetch(`${API_URL}/chats`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                        recipientId,
+                }),
+                credentials: "include",
+        });
+
+        if (!res.ok) {
+                throw new Error(`Failed to create or get chat: ${res.status}`);
+        }
+
+        return res;
+};

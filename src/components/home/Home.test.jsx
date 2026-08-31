@@ -20,6 +20,7 @@ vi.mock("../navbar/Navbar", () => {
                 default: vi.fn(() => "Navbar"),
         };
 });
+
 vi.mock("../chatPreview/ChatPreview", () => {
         return { default: vi.fn(() => <div data-testid="chat"></div>) };
 });
@@ -118,12 +119,14 @@ describe("Home component", () => {
         });
         it("displays an error message on failed fetch", async () => {
                 getUsersChats.mockRejectedValue(
-                        new Error("Failed to get users"),
+                        new Error("Failed to get user's chats"),
                 );
 
                 render(<Home />);
 
-                const error = await screen.findByText(/Failed to get users/i);
+                const error = await screen.findByText(
+                        /Failed to get user's chats/i,
+                );
 
                 expect(error).toBeInTheDocument();
         });

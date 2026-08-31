@@ -19,6 +19,8 @@ function App() {
                                 const data = await res.json();
 
                                 // Would throw error if failed fetch
+                                console.log("set true");
+
                                 setAuth(true);
                                 setUserId(data.userId);
                         } catch (error) {
@@ -28,21 +30,17 @@ function App() {
                         }
                 };
 
-                if (
-                        !auth &&
-                        pathname !== "/login" &&
-                        pathname !== "/register"
-                ) {
-                        console.log("resr");
-                        navigate("/login");
-                }
-
                 checkAuth();
-        }, [navigate, pathname, auth]);
+        }, [navigate, auth]);
 
         const changeAuth = (authBool) => {
                 setAuth(authBool);
         };
+
+        if (!auth && pathname !== "/login" && pathname !== "/register") {
+                console.log("resr");
+                navigate("/login");
+        }
 
         // TODO: is this auth checking really right?
         // Plus, might not need to send auth itself round
