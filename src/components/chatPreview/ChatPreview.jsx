@@ -1,6 +1,20 @@
 function ChatPreview({ chat, userId }) {
+        console.log(chat);
+        console.log(userId);
+
         const otherUser = chat.users.find((user) => user.id !== userId);
-        const lastMessage = chat.messages[chat.messages.length - 1];
+        let lastMessage;
+        if (chat.messages.length) {
+                lastMessage = chat.messages[chat.messages.length - 1];
+        } else {
+                return (
+                        <div>
+                                <h2>{otherUser.username}</h2>
+                                <p>No messages...</p>
+                        </div>
+                );
+        }
+
         return (
                 <div>
                         <h2>{otherUser.username}</h2>

@@ -60,7 +60,17 @@ export const logout = async () => {
         }
 };
 
-export const getUsersChats = async () => {};
+export const getUsersChats = async (userId) => {
+        const res = await fetch(`${API_URL}/users/${userId}/chats`, {
+                credentials: "include",
+        });
+
+        if (!res.ok) {
+                throw new Error(`Failed to get user's chats: ${res.status}`);
+        }
+
+        return res;
+};
 
 export const getUsers = async () => {
         const res = await fetch(`${API_URL}/users`, {
