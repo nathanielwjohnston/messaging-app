@@ -11,6 +11,7 @@ function App() {
         let { pathname } = useLocation();
 
         console.log(auth);
+        console.log(pathname);
 
         useEffect(() => {
                 const checkAuth = async () => {
@@ -27,20 +28,32 @@ function App() {
                                 // TODO: show error in ui?
                                 console.log(error);
                                 setAuth(false);
+
+                                // TODO? works i THINK but i dont really like it
+
+                                if (
+                                        // !auth &&
+                                        pathname !== "/login" &&
+                                        pathname !== "/register"
+                                ) {
+                                        console.log("resr");
+                                        navigate("/login");
+                                        return;
+                                }
                         }
+
+                        // TODO: using state after it has been set?
+
+                        console.log(auth);
                 };
 
                 checkAuth();
-        }, [navigate, auth]);
+        }, [navigate, auth, pathname]);
 
         const changeAuth = (authBool) => {
                 setAuth(authBool);
         };
-
-        if (!auth && pathname !== "/login" && pathname !== "/register") {
-                console.log("resr");
-                navigate("/login");
-        }
+        console.log("test");
 
         // TODO: is this auth checking really right?
         // Plus, might not need to send auth itself round

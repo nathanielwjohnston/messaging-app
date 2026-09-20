@@ -100,3 +100,33 @@ export const createChat = async (recipientId) => {
 
         return res;
 };
+
+export const getChat = async (chatId) => {
+        const res = await fetch(`${API_URL}/chats/${chatId}`, {
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+        });
+
+        if (!res.ok) {
+                throw new Error(`Failed to create or get chat: ${res.status}`);
+        }
+
+        return res;
+};
+
+export const sendMessage = async (message, chatId) => {
+        const res = await fetch(`${API_URL}/chats/${chatId}/messages`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                        content: message,
+                }),
+                credentials: "include",
+        });
+
+        if (!res.ok) {
+                throw new Error(`Failed to create or get chat: ${res.status}`);
+        }
+
+        return res;
+};
