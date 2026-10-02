@@ -1,19 +1,30 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
-import { useOutletContext, useLocation, MemoryRouter } from "react-router";
+import {
+        useOutletContext,
+        useLocation,
+        MemoryRouter,
+        useNavigate,
+} from "react-router";
 import Profile from "./Profile";
-import { getProfile, updateProfile } from "../../api";
+import { getProfile, updateProfile, createChat } from "../../api";
 import userEvent from "@testing-library/user-event";
 
 vi.mock("../../api", () => ({
         getProfile: vi.fn(),
         updateProfile: vi.fn(),
+        createChat: vi.fn(),
 }));
 
 vi.mock("react-router", async (importOriginal) => {
         const actual = await importOriginal();
 
-        return { ...actual, useOutletContext: vi.fn(), useLocation: vi.fn() };
+        return {
+                ...actual,
+                useOutletContext: vi.fn(),
+                useLocation: vi.fn(),
+                useNavigate: vi.fn(),
+        };
 });
 
 vi.mock("../navbar/Navbar", () => {
@@ -50,6 +61,8 @@ getProfile.mockImplementation((userId) => {
                 json: () => Promise.resolve(userData),
         };
 });
+
+// TODO: test chat button
 
 describe("Profile component", () => {
         beforeEach(() => {
@@ -274,5 +287,40 @@ describe("Profile component", () => {
                         /failed to update profile/i,
                 );
                 expect(error).toBeInTheDocument();
+        });
+        it("follows user to chat window", async () => {
+                getProfile.mockResolvedValue({
+                        ok: true,
+                        status: 200,
+                        json: () => Promise.resolve(user1),
+                });
+
+                const chatId = 1;
+                createChat.mockResolvedValue({
+                        ok: true,
+                        status: 200,
+                        json: () => Promise.resolve({ id: chatId }),
+                });
+
+                const navigate = vi.fn();
+                useNavigate.mockReturnValue(navigate);
+
+                useLocation.mockReturnValue({ pathname: "/users/2/profile" });
+
+                const user = userEvent.setup();
+
+                render(
+                        <MemoryRouter>
+                                <Profile />
+                        </MemoryRouter>,
+                );
+
+                const chatButton = await screen.findByRole("button", {
+                        name: /chat!/i,
+                });
+
+                await user.click(chatButton);
+
+                expect(navigate).toHaveBeenCalledWith(`/chats/${chatId}`);
         });
 });
