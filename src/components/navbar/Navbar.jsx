@@ -1,3 +1,5 @@
+import styles from "./Navbar.module.css";
+
 import { useOutletContext } from "react-router";
 import { logout } from "../../api";
 import { Link } from "react-router";
@@ -16,7 +18,7 @@ function Navbar() {
         }
 
         return (
-                <div>
+                <div className={styles.navbar}>
                         <Link to="/">Home</Link>
                         <Link to="/users">Users</Link>
                         <Link to={`/users/${userId}/profile`}>Profile</Link>

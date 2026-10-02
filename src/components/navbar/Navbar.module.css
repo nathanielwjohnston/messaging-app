@@ -1,0 +1,28 @@
+.navbar {
+        height: 8em;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        place-items: center;
+        background-color: rgb(23, 27, 53);
+        color: white;
+}
+
+.navbar * {
+        text-decoration: none;
+        color: white;
+        font-size: 3.2em;
+}
+
+.navbar *:hover {
+        color: rgba(255, 255, 255, 0.185);
+        font-size: 3.3em;
+}
+
+.navbar button {
+        background-color: transparent;
+        border: none;
+}
+
+.navbar button:hover {
+        cursor: pointer;
+}
