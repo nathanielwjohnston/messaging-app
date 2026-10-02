@@ -16,7 +16,9 @@ function Chat() {
         const [message, setMessage] = useState("");
 
         const location = useLocation();
+        console.log(location.pathname);
         const [, chatId] = location.pathname.split("chats/");
+        console.log(chatId);
 
         useEffect(() => {
                 const fetchChat = async () => {

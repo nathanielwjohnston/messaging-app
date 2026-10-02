@@ -1,5 +1,208 @@
+import { useState, useEffect } from "react";
+import { useOutletContext, useLocation } from "react-router";
+import Navbar from "../navbar/Navbar";
+import { getProfile, updateProfile } from "../../api";
+
 function Profile() {
-        return <>profile</>;
+        const { userId } = useOutletContext();
+
+        const [loading, setLoading] = useState("Loading...");
+        const [error, setError] = useState(false);
+
+        const [ownsProfile, setOwnsProfile] = useState(false);
+        const [editing, setEditing] = useState(false);
+        const [profile, setProfile] = useState({});
+
+        const [editedProfile, setEditedProfile] = useState({});
+
+        const location = useLocation();
+        // /users/:userId/profile
+        const splits = location.pathname.split("/");
+        const profileId = splits[2];
+
+        useEffect(() => {
+                const fetchProfile = async () => {
+                        try {
+                                const res = await getProfile(profileId);
+                                const userProfile = await res.json();
+
+                                setProfile(userProfile);
+                                setEditedProfile(userProfile);
+
+                                console.log("profile id" + profileId);
+                                console.log("user id" + userId);
+                                if (profileId === userId) {
+                                        setOwnsProfile(true);
+                                }
+                                setError(false);
+                        } catch (err) {
+                                console.log("err");
+                                setError(new Error(err));
+                        }
+                        setLoading(false);
+                };
+
+                fetchProfile();
+        }, [profileId, userId]);
+
+        async function updateUserProfile() {
+                setLoading("Updating profile...");
+
+                // TODO? obviously wouldn't work, but should i implement
+                // the idea here?
+                // if (editedProfile === profile) {
+                //         setEditing(false);
+                //         setLoading(false);
+                // }
+
+                try {
+                        const res = await updateProfile(editedProfile, userId);
+                        const updatedProfile = await res.json();
+                        setProfile(updatedProfile);
+                        setEditedProfile(updatedProfile);
+                        setError(false);
+                } catch (err) {
+                        setError(new Error(err));
+                }
+                setLoading(false);
+                setEditing(false);
+        }
+
+        function editProfile() {
+                setEditing(true);
+        }
+
+        function cancelEdit() {
+                setEditing(false);
+                setEditedProfile(profile);
+        }
+
+        function updateAvatar(e) {
+                setEditedProfile({
+                        ...editedProfile,
+                        // avatar NOT avatarUrl
+                        avatar: e.target.files[0],
+                });
+        }
+
+        function updateUsername(e) {
+                setEditedProfile({
+                        ...editedProfile,
+                        username: e.target.value,
+                });
+        }
+
+        function updateAge(e) {
+                const age = parseInt(e.target.value);
+                setEditedProfile({
+                        ...editedProfile,
+                        age,
+                });
+        }
+
+        function updateBio(e) {
+                setEditedProfile({
+                        ...editedProfile,
+                        bio: e.target.value,
+                });
+        }
+
+        console.log(profile);
+
+        return (
+                <>
+                        <Navbar />
+                        <div>
+                                {error && <div>{error.message}</div>}
+                                {loading && <div>{loading}</div>}
+                                {!editing ? (
+                                        <div>
+                                                <img
+                                                        src={profile.avatarUrl}
+                                                        alt={
+                                                                profile.username +
+                                                                "'s profile picture"
+                                                        }
+                                                />
+                                                <h1>{profile.username}</h1>
+                                                <p>{profile.age}</p>
+                                                <p>{profile.bio}</p>
+                                        </div>
+                                ) : (
+                                        <div>
+                                                <form>
+                                                        <label>
+                                                                Change profile
+                                                                picture
+                                                                <input
+                                                                        type="file"
+                                                                        onChange={
+                                                                                updateAvatar
+                                                                        }
+                                                                />
+                                                        </label>
+                                                        <label>
+                                                                Username
+                                                                <input
+                                                                        type="text"
+                                                                        value={
+                                                                                editedProfile.username
+                                                                        }
+                                                                        onChange={
+                                                                                updateUsername
+                                                                        }
+                                                                />
+                                                        </label>
+                                                        <label>
+                                                                Age
+                                                                <input
+                                                                        type="number"
+                                                                        value={
+                                                                                editedProfile.age
+                                                                        }
+                                                                        onChange={
+                                                                                updateAge
+                                                                        }
+                                                                        min={18}
+                                                                />
+                                                        </label>
+                                                        <label>
+                                                                Bio
+                                                                <input
+                                                                        type="text"
+                                                                        value={
+                                                                                editedProfile.bio
+                                                                        }
+                                                                        onChange={
+                                                                                updateBio
+                                                                        }
+                                                                />
+                                                        </label>
+                                                </form>
+                                        </div>
+                                )}
+                                {ownsProfile && !editing && (
+                                        <button onClick={editProfile}>
+                                                Edit
+                                        </button>
+                                )}
+                                {ownsProfile && editing && (
+                                        <>
+                                                <button
+                                                        onClick={
+                                                                updateUserProfile
+                                                        }
+                                                >
+                                                        Update
+                                                </button>
+                                                <button onClick={cancelEdit}>
+                                                        Cancel
+                                                </button>
+                                        </>
+                                )}
+                        </div>
+                </>
+        );
 }
 
 export default Profile;

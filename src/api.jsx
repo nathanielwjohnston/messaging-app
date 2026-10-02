@@ -130,3 +130,35 @@ export const sendMessage = async (message, chatId) => {
 
         return res;
 };
+
+export const getProfile = async (userId) => {
+        const res = await fetch(`${API_URL}/users/${userId}/profile`, {
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+        });
+
+        if (!res.ok) {
+                throw new Error(`Failed to get profile: ${res.status}`);
+        }
+
+        return res;
+};
+
+export const updateProfile = async (editedProfile, userId) => {
+        const data = new FormData();
+        for (const property in editedProfile) {
+                data.append(property, editedProfile[property]);
+        }
+
+        const res = await fetch(`${API_URL}/users/${userId}/profile`, {
+                method: "PUT",
+                body: data,
+                credentials: "include",
+        });
+
+        if (!res.ok) {
+                throw new Error(`Failed to update profile: ${res.status}`);
+        }
+
+        return res;
+};
