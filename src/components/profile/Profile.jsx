@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { useOutletContext, useLocation } from "react-router";
+import { useOutletContext, useLocation, useNavigate } from "react-router";
 import Navbar from "../navbar/Navbar";
-import { getProfile, updateProfile } from "../../api";
+import { getProfile, updateProfile, createChat } from "../../api";
 
 function Profile() {
         const { userId } = useOutletContext();
@@ -20,6 +20,8 @@ function Profile() {
         const splits = location.pathname.split("/");
         const profileId = splits[2];
 
+        let navigate = useNavigate();
+
         useEffect(() => {
                 const fetchProfile = async () => {
                         try {
@@ -29,14 +31,11 @@ function Profile() {
                                 setProfile(userProfile);
                                 setEditedProfile(userProfile);
 
-                                console.log("profile id" + profileId);
-                                console.log("user id" + userId);
                                 if (profileId === userId) {
                                         setOwnsProfile(true);
                                 }
                                 setError(false);
                         } catch (err) {
-                                console.log("err");
                                 setError(new Error(err));
                         }
                         setLoading(false);
@@ -48,8 +47,7 @@ function Profile() {
         async function updateUserProfile() {
                 setLoading("Updating profile...");
 
-                // TODO? obviously wouldn't work, but should i implement
-                // the idea here?
+                // was just an idea, obviously not this implementation
                 // if (editedProfile === profile) {
                 //         setEditing(false);
                 //         setLoading(false);
@@ -66,6 +64,18 @@ function Profile() {
                 }
                 setLoading(false);
                 setEditing(false);
+        }
+
+        async function startChat() {
+                setLoading(true);
+                try {
+                        const res = await createChat(profileId);
+                        const chat = await res.json();
+                        navigate(`/chats/${chat.id}`);
+                } catch (err) {
+                        setError(new Error(err));
+                        setLoading(false);
+                }
         }
 
         function editProfile() {
@@ -106,8 +116,6 @@ function Profile() {
                         bio: e.target.value,
                 });
         }
-
-        console.log(profile);
 
         return (
                 <>
@@ -180,6 +188,11 @@ function Profile() {
                                                         </label>
                                                 </form>
                                         </div>
+                                )}
+                                {!ownsProfile && (
+                                        <button onClick={startChat}>
+                                                Chat!
+                                        </button>
                                 )}
                                 {ownsProfile && !editing && (
                                         <button onClick={editProfile}>

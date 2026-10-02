@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { useOutletContext } from "react-router";
 import { login } from "../../api";
 
@@ -64,6 +64,7 @@ function Login() {
                                         Log in
                                 </button>
                         </form>
+                        <Link to="/register">No account? Register here</Link>
                 </>
         );
 }

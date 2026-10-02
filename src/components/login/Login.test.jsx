@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Login from "./Login";
 import { login } from "../../api";
-import { useNavigate, useOutletContext } from "react-router";
+import { useNavigate, useOutletContext, MemoryRouter } from "react-router";
 
 vi.mock("../../api", () => ({
         login: vi.fn(),
@@ -15,14 +15,16 @@ vi.mock("react-router", async (importOriginal) => {
         return { ...actual, useOutletContext: vi.fn(), useNavigate: vi.fn() };
 });
 
-// TODO: error testing?
-
 describe("Login component", () => {
         beforeEach(() => {
                 useOutletContext.mockReturnValue({ changeAuth: vi.fn() });
         });
         it("displays form", () => {
-                render(<Login />);
+                render(
+                        <MemoryRouter>
+                                <Login />
+                        </MemoryRouter>,
+                );
 
                 const username = screen.getByLabelText("Username");
                 expect(username).toBeInTheDocument();
@@ -44,7 +46,11 @@ describe("Login component", () => {
 
                 const user = userEvent.setup();
 
-                render(<Login />);
+                render(
+                        <MemoryRouter>
+                                <Login />
+                        </MemoryRouter>,
+                );
 
                 await user.click(
                         screen.getByRole("button", { name: /log in/i }),
@@ -68,7 +74,11 @@ describe("Login component", () => {
 
                 const user = userEvent.setup();
 
-                render(<Login />);
+                render(
+                        <MemoryRouter>
+                                <Login />
+                        </MemoryRouter>,
+                );
 
                 await user.type(screen.getByLabelText("Username"), "Username");
                 await user.type(screen.getByLabelText("Password"), "Password");
@@ -78,5 +88,28 @@ describe("Login component", () => {
                 );
 
                 expect(navigate).toHaveBeenCalledWith("/");
+        });
+        it("displays an error on login fetch fail", async () => {
+                login.mockRejectedValue(new Error("Failed to log in user"));
+
+                const user = userEvent.setup();
+
+                render(
+                        <MemoryRouter>
+                                <Login />
+                        </MemoryRouter>,
+                );
+
+                await user.type(screen.getByLabelText("Username"), "Username");
+                await user.type(screen.getByLabelText("Password"), "Password");
+
+                await user.click(
+                        screen.getByRole("button", { name: /log in/i }),
+                );
+
+                const errorMessage = await screen.findByText(
+                        /failed to log in user/i,
+                );
+                expect(errorMessage).toBeInTheDocument();
         });
 });

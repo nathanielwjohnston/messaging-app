@@ -11,7 +11,6 @@ function Navbar() {
 
                         changeAuth(false);
                 } catch (error) {
-                        // TODO: error?
                         console.log(error);
                 }
         }
@@ -27,7 +26,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
-// TODO: probably don't need to test, but more for reference, can have register/login links on
-// each page to nagivate over to the other. this would obviously be implemented
-// on the register and login pages

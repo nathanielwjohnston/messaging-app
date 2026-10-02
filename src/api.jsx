@@ -1,7 +1,5 @@
 import { API_URL } from "./config";
 
-// TODO: set auth to false if these fail because of auth? when auth is required of course
-
 export const register = async (username, password, passwordConfirm) => {
         const res = await fetch(`${API_URL}/register`, {
                 method: "POST",
@@ -30,11 +28,7 @@ export const login = async (username, password) => {
                 credentials: "include",
         });
 
-        // TODO: user not being logged out properly
-
         if (!res.ok) {
-                const result = await res.json();
-                console.log(result.error);
                 throw new Error(`Failed to log in user: ${res.status}`);
         }
 };

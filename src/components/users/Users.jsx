@@ -19,7 +19,6 @@ function Users() {
                                 setUsers(users);
                                 setLoading(false);
                         } catch (err) {
-                                // TODO: is this set error right?
                                 setError(new Error(err));
                                 setLoading(false);
                         }
@@ -35,13 +34,10 @@ function Users() {
                         const chat = await res.json();
                         navigate(`/chats/${chat.id}`);
                 } catch (err) {
-                        // TODO: is this set error right?
                         setError(new Error(err));
                         setLoading(false);
                 }
         }
-
-        console.log(users);
 
         return (
                 <>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useOutletContext, useLocation } from "react-router";
+import { useOutletContext, useLocation, Link } from "react-router";
 import Navbar from "../navbar/Navbar";
 import Message from "../message/Message";
 import SendBox from "../sendBox/SendBox";
@@ -15,10 +15,10 @@ function Chat() {
         const [messages, setMessages] = useState([]);
         const [message, setMessage] = useState("");
 
+        const [otherUser, setOtherUser] = useState({});
+
         const location = useLocation();
-        console.log(location.pathname);
         const [, chatId] = location.pathname.split("chats/");
-        console.log(chatId);
 
         useEffect(() => {
                 const fetchChat = async () => {
@@ -41,6 +41,10 @@ function Chat() {
                                         },
                                 );
                                 setMessages(chatMessages);
+                                const recipient = chat.users.find(
+                                        (user) => user.id !== userId,
+                                );
+                                setOtherUser(recipient);
                         } catch (err) {
                                 setError(new Error(err));
                         }
@@ -48,7 +52,7 @@ function Chat() {
                 };
 
                 fetchChat();
-        }, [chatId]);
+        }, [chatId, userId]);
 
         async function sendMessageToUser(message) {
                 setLoading("Sending message...");
@@ -72,14 +76,16 @@ function Chat() {
                 <>
                         <Navbar></Navbar>
                         <div>
-                                <h1>
-                                        {chat &&
-                                                chat.users.find(
-                                                        (user) =>
-                                                                user.id !==
-                                                                userId,
-                                                ).username}
-                                </h1>
+                                <Link
+                                        to={
+                                                "/users/" +
+                                                otherUser.id +
+                                                "/profile"
+                                        }
+                                >
+                                        <h1>{chat && otherUser.username}</h1>
+                                </Link>
+
                                 {error && <div>{error.message}</div>}
                                 {loading && <div>{loading}</div>}
                                 {messages.map((message) => {

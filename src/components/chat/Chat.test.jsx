@@ -97,10 +97,7 @@ describe("Chat component", () => {
                         json: () => Promise.resolve(chat),
                 });
 
-                // TODO: is this right?
-                sendMessage.mockImplementation((message, chatId) => {
-                        console.log(chatId);
-                        console.log(message);
+                sendMessage.mockImplementation((message) => {
                         return {
                                 ok: true,
                                 status: 200,
@@ -127,7 +124,6 @@ describe("Chat component", () => {
 
                 await user.type(screen.getByRole("textbox"), "Typed message");
                 await user.click(screen.getByRole("button"));
-                console.log("test");
                 const newMessage = await screen.findByText(/Typed message/i);
                 expect(newMessage).toBeInTheDocument();
         });

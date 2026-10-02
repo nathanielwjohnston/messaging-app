@@ -22,8 +22,6 @@ vi.mock("../navbar/Navbar", () => {
         };
 });
 
-// TODO: test cancelling an edit
-
 const user1 = {
         username: "user1",
         bio: "User 1's bio",
@@ -55,8 +53,6 @@ getProfile.mockImplementation((userId) => {
 
 describe("Profile component", () => {
         beforeEach(() => {
-                // TODO: do this need to be in before each? could it not be pulled out
-                // to before the describe block?
                 useOutletContext.mockReturnValue({ userId: "1" });
                 useLocation.mockReturnValue({ pathname: "/users/1/profile" });
         });
@@ -72,8 +68,6 @@ describe("Profile component", () => {
                 await screen.findByText("User 1's bio");
                 await screen.findByText("23");
                 await screen.findByAltText(/user1/i);
-
-                // Todo: do i even need expect? it would fail without finding surely
         });
         it("displays others profile data", async () => {
                 useLocation.mockReturnValue({ pathname: "/users/2/profile" });
@@ -90,13 +84,11 @@ describe("Profile component", () => {
                 await screen.findByAltText(/user2/i);
         });
         it("allows editing of own profile", async () => {
-                updateProfile.mockImplementation((newProfileData, userId) => {
-                        console.log(newProfileData.avatar.name);
+                updateProfile.mockImplementation((newProfileData) => {
                         newProfileData = {
                                 ...newProfileData,
                                 avatarUrl: newProfileData.avatar.name,
                         };
-                        console.log(userId);
                         // Should replace existing data, if partial data is changed
                         const profileData = { ...user1, ...newProfileData };
                         return {
@@ -154,6 +146,28 @@ describe("Profile component", () => {
                         /new username's profile picture/i,
                 );
                 expect(newImage.src).toBe("http://localhost:3000/avatar.png");
+        });
+        it("cancels an attempted edit", async () => {
+                const user = userEvent.setup();
+
+                render(
+                        <MemoryRouter>
+                                <Profile />
+                        </MemoryRouter>,
+                );
+
+                const editButton = await screen.findByRole("button", {
+                        name: /edit/i,
+                });
+                await user.click(editButton);
+                const cancelButton = await screen.findByRole("button", {
+                        name: /cancel/i,
+                });
+                await user.click(cancelButton);
+
+                await screen.findByRole("button", {
+                        name: /edit/i,
+                });
         });
         it("prevents editing of other profiles", async () => {
                 useLocation.mockReturnValue({ pathname: "/users/2/profile" });

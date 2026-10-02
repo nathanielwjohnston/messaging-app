@@ -105,7 +105,6 @@ describe("Home component", () => {
                         </MemoryRouter>,
                 );
 
-                // TODO: does get by role need a name here?
                 const chatLink = await screen.findByRole("link");
                 expect(chatLink).toBeInTheDocument();
                 expect(chatLink).toHaveAttribute("href", `/chats/${chatId}`);

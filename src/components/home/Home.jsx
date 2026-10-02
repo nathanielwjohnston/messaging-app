@@ -19,7 +19,6 @@ function Home() {
                                 setChats(usersChats);
                                 setLoading(false);
                         } catch (err) {
-                                // TODO: is this set error right?
                                 setError(new Error(err));
                                 setLoading(false);
                         }
@@ -27,8 +26,6 @@ function Home() {
 
                 getChats();
         }, [userId]);
-
-        // TODO: profile pics and in testing
 
         return (
                 <>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { useOutletContext } from "react-router";
 import { register } from "../../api";
 
@@ -86,6 +86,9 @@ function Register() {
                                         Register
                                 </button>
                         </form>
+                        <Link to="/login">
+                                Alreay have an account? Log in here
+                        </Link>
                 </>
         );
 }

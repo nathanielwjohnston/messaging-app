@@ -4,8 +4,16 @@ import ChatPreview from "./ChatPreview";
 
 const chat = {
         users: [
-                { id: 1, username: "Nathaniel" },
-                { id: 2, username: "Yusuf" },
+                {
+                        id: 1,
+                        username: "Nathaniel",
+                        profile: { avatarUrl: "testurl" },
+                },
+                {
+                        id: 2,
+                        username: "Yusuf",
+                        profile: { avatarUrl: "testurl2" },
+                },
         ],
         messages: [
                 { content: "Right on dude!", userId: 1 },
@@ -17,11 +25,15 @@ const chat = {
 const userId = 1;
 
 describe("Chat Preview component", () => {
-        it("shows the other user's username", () => {
+        it("shows the other user's username and profile picture", () => {
                 render(<ChatPreview chat={chat} userId={userId} />);
 
                 const username = screen.getByText("Yusuf");
                 expect(username).toBeInTheDocument();
+
+                const picture = screen.getByRole("img");
+                expect(picture).toBeInTheDocument();
+                expect(picture.src).toBe("http://localhost:3000/testurl2");
         });
         it("shows part of the last message sent", () => {
                 render(<ChatPreview chat={chat} userId={userId} />);

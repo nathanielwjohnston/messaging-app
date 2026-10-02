@@ -6,7 +6,6 @@ function getMessageDate(date) {
         let hour = date.getHours();
         let minutes = date.getMinutes();
 
-        // TODO: get leading zeros
         day = day < 10 ? `0${day}` : day;
         month = month < 10 ? `0${month}` : month;
         year = year.toString().slice(-2);

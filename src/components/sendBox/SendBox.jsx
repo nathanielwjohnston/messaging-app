@@ -8,7 +8,6 @@ function SendBox({ message, updateMessage, sendMessage }) {
                         />
                         <button
                                 onClick={() => {
-                                        console.log("click");
                                         sendMessage(message);
                                 }}
                         >

@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Register from "./Register";
 import { register } from "../../api";
-import { useNavigate, useOutletContext } from "react-router";
+import { useNavigate, useOutletContext, MemoryRouter } from "react-router";
 
 vi.mock("../../api", () => ({
         register: vi.fn(),
@@ -15,14 +15,16 @@ vi.mock("react-router", async (importOriginal) => {
         return { ...actual, useOutletContext: vi.fn(), useNavigate: vi.fn() };
 });
 
-// TODO: error testing?
-
 describe("Register component", () => {
         beforeEach(() => {
                 useOutletContext.mockReturnValue({ changeAuth: vi.fn() });
         });
         it("displays form", () => {
-                render(<Register />);
+                render(
+                        <MemoryRouter>
+                                <Register />
+                        </MemoryRouter>,
+                );
 
                 const username = screen.getByLabelText("Username");
                 expect(username).toBeInTheDocument();
@@ -46,7 +48,11 @@ describe("Register component", () => {
 
                 const user = userEvent.setup();
 
-                render(<Register />);
+                render(
+                        <MemoryRouter>
+                                <Register />
+                        </MemoryRouter>,
+                );
 
                 await user.click(
                         screen.getByRole("button", { name: /register/i }),
@@ -64,7 +70,11 @@ describe("Register component", () => {
 
                 const user = userEvent.setup();
 
-                render(<Register />);
+                render(
+                        <MemoryRouter>
+                                <Register />
+                        </MemoryRouter>,
+                );
 
                 await user.type(screen.getByLabelText("Username"), "Username");
                 await user.type(screen.getByLabelText("Password"), "Password");
@@ -94,7 +104,11 @@ describe("Register component", () => {
 
                 const user = userEvent.setup();
 
-                render(<Register />);
+                render(
+                        <MemoryRouter>
+                                <Register />
+                        </MemoryRouter>,
+                );
 
                 await user.type(screen.getByLabelText("Username"), "Username");
                 await user.type(screen.getByLabelText("Password"), "Password");
@@ -108,5 +122,35 @@ describe("Register component", () => {
                 );
 
                 expect(navigate).toHaveBeenCalledWith("/");
+        });
+
+        it("displays an error on register fetch fail", async () => {
+                register.mockRejectedValue(
+                        new Error("Failed to register user"),
+                );
+
+                const user = userEvent.setup();
+
+                render(
+                        <MemoryRouter>
+                                <Register />
+                        </MemoryRouter>,
+                );
+
+                await user.type(screen.getByLabelText("Username"), "Username");
+                await user.type(screen.getByLabelText("Password"), "Password");
+                await user.type(
+                        screen.getByLabelText("Confirm password"),
+                        "Password",
+                );
+
+                await user.click(
+                        screen.getByRole("button", { name: /register/i }),
+                );
+
+                const errorMessage = await screen.findByText(
+                        /failed to register user/i,
+                );
+                expect(errorMessage).toBeInTheDocument();
         });
 });
