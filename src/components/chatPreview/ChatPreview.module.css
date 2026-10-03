@@ -1,0 +1,34 @@
+.preview {
+        height: 10em;
+        width: 30em;
+        padding: 2em;
+        border: 0.1em solid rgb(23, 27, 53);
+        border-radius: 1em;
+        transition:
+                background-color 1s,
+                color 1s;
+}
+
+.preview:hover {
+        background-color: rgb(23, 27, 53);
+        color: white;
+}
+
+.preview:hover img {
+        color: rgb(23, 27, 53);
+}
+
+.idContainer {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        margin-bottom: 1em;
+}
+
+.idContainer img {
+        height: 5em;
+        width: 5em;
+        border-radius: 50%;
+        object-fit: cover;
+        background-color: white;
+}

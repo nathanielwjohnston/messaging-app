@@ -1,0 +1,40 @@
+.error {
+        width: 60em;
+        margin-top: 2em;
+        color: white;
+        background-color: red;
+        text-align: center;
+        padding: 0.5em;
+        border-radius: 0.2em;
+        font-weight: bold;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        /*TODO: doesnt work, not even - because of width percentage??*/
+        transform: translate(-50%, 0);
+}
+
+.loading {
+        width: 30em;
+        color: white;
+        background-color: rgb(23, 27, 53);
+        text-align: center;
+        padding: 0.5em;
+        border-radius: 0.2em;
+        font-weight: bold;
+}
+
+.home {
+        margin: 2em;
+        display: grid;
+        justify-content: center;
+        gap: 3em;
+}
+
+.home a {
+        text-decoration: none;
+}
+
+.home a:visited {
+        color: rgb(23, 27, 53);
+}

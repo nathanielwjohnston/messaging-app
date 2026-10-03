@@ -1,3 +1,5 @@
+import styles from "./Home.module.css";
+
 import { useState, useEffect } from "react";
 import { Link, useOutletContext } from "react-router";
 import Navbar from "../navbar/Navbar";
@@ -30,9 +32,17 @@ function Home() {
         return (
                 <>
                         <Navbar />
-                        <div>
-                                {error && <div>{error.message}</div>}
-                                {loading && <div>Loading...</div>}
+                        <div className={styles.home}>
+                                {error && (
+                                        <div className={styles.error}>
+                                                {error.message}
+                                        </div>
+                                )}
+                                {loading && (
+                                        <div className={styles.loading}>
+                                                Loading...
+                                        </div>
+                                )}
                                 {chats.map((chat) => {
                                         return (
                                                 <Link
