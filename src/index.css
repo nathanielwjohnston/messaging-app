@@ -39,3 +39,11 @@ h5,
 h6 {
         overflow-wrap: break-word;
 }
+
+/* */
+
+html,
+body,
+div#root {
+        height: 100%;
+}

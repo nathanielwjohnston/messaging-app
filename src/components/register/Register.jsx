@@ -1,3 +1,5 @@
+import styles from "./Register.module.css";
+
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 import { useOutletContext } from "react-router";
@@ -48,48 +50,56 @@ function Register() {
         }
 
         return (
-                <>
+                <div className={styles.register}>
                         {error && <div>{error.message}</div>}
-                        <div>Register</div>
-                        <form>
-                                <label>
-                                        Username
-                                        <input
-                                                type="text"
-                                                value={username}
-                                                onChange={updateUsername}
-                                                required
-                                        />
-                                </label>
-                                <label>
-                                        Password
-                                        <input
-                                                type="text"
-                                                value={password}
-                                                onChange={updatePassword}
-                                                required
-                                        />
-                                </label>
-                                <label>
-                                        Confirm password
-                                        <input
-                                                type="text"
-                                                value={passwordConfirm}
-                                                onChange={updatePasswordConfirm}
-                                                required
-                                        />
-                                </label>
-                                <button
-                                        type="button"
-                                        onClick={attemptRegistration}
-                                >
-                                        Register
-                                </button>
-                        </form>
-                        <Link to="/login">
-                                Alreay have an account? Log in here
-                        </Link>
-                </>
+                        <div className={styles.registerForm}>
+                                <div>Register</div>
+                                <form>
+                                        <label>
+                                                Username
+                                                <input
+                                                        type="text"
+                                                        value={username}
+                                                        onChange={
+                                                                updateUsername
+                                                        }
+                                                        required
+                                                />
+                                        </label>
+                                        <label>
+                                                Password
+                                                <input
+                                                        type="text"
+                                                        value={password}
+                                                        onChange={
+                                                                updatePassword
+                                                        }
+                                                        required
+                                                />
+                                        </label>
+                                        <label>
+                                                Confirm password
+                                                <input
+                                                        type="text"
+                                                        value={passwordConfirm}
+                                                        onChange={
+                                                                updatePasswordConfirm
+                                                        }
+                                                        required
+                                                />
+                                        </label>
+                                        <button
+                                                type="button"
+                                                onClick={attemptRegistration}
+                                        >
+                                                Register
+                                        </button>
+                                </form>
+                                <Link to="/login">
+                                        Alreay have an account? Log in here
+                                </Link>
+                        </div>
+                </div>
         );
 }
 

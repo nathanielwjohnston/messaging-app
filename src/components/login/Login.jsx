@@ -1,3 +1,5 @@
+import styles from "./Login.module.css";
+
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 import { useOutletContext } from "react-router";
@@ -38,34 +40,49 @@ function Login() {
         }
 
         return (
-                <>
-                        {error && <div>{error.message}</div>}
-                        <div>Log in</div>
-                        <form>
-                                <label>
-                                        Username
-                                        <input
-                                                type="text"
-                                                value={username}
-                                                onChange={updateUsername}
-                                                required
-                                        />
-                                </label>
-                                <label>
-                                        Password
-                                        <input
-                                                type="text"
-                                                value={password}
-                                                onChange={updatePassword}
-                                                required
-                                        />
-                                </label>
-                                <button type="button" onClick={attemptLogIn}>
-                                        Log in
-                                </button>
-                        </form>
-                        <Link to="/register">No account? Register here</Link>
-                </>
+                <div className={styles.login}>
+                        {error && (
+                                <div className={styles.error}>
+                                        {error.message}
+                                </div>
+                        )}
+                        <div className={styles.loginForm}>
+                                <div>Log in</div>
+                                <form>
+                                        <label>
+                                                Username
+                                                <input
+                                                        type="text"
+                                                        value={username}
+                                                        onChange={
+                                                                updateUsername
+                                                        }
+                                                        required
+                                                />
+                                        </label>
+                                        <label>
+                                                Password
+                                                <input
+                                                        type="text"
+                                                        value={password}
+                                                        onChange={
+                                                                updatePassword
+                                                        }
+                                                        required
+                                                />
+                                        </label>
+                                        <button
+                                                type="button"
+                                                onClick={attemptLogIn}
+                                        >
+                                                Log in
+                                        </button>
+                                </form>
+                                <Link to="/register">
+                                        No account? Register here
+                                </Link>
+                        </div>
+                </div>
         );
 }
 
