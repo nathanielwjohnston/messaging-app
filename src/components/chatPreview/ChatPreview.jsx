@@ -42,7 +42,7 @@ function ChatPreview({ chat, userId }) {
                                         {"You: " +
                                                 lastMessage.content.slice(
                                                         0,
-                                                        10,
+                                                        20,
                                                 ) +
                                                 " ..."}
                                 </p>

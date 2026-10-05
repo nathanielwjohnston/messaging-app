@@ -1,0 +1,32 @@
+.user {
+        height: 10em;
+        width: 30em;
+        padding: 2em;
+        border: 0.1em solid rgb(23, 27, 53);
+        border-radius: 1em;
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        margin-bottom: 1em;
+        cursor: pointer;
+        transition:
+                background-color 1s,
+                color 1s;
+}
+
+.user img {
+        height: 5em;
+        width: 5em;
+        border-radius: 50%;
+        object-fit: cover;
+        background-color: white;
+}
+
+.user:hover {
+        background-color: rgb(23, 27, 53);
+        color: white;
+}
+
+.user:hover img {
+        color: rgb(23, 27, 53);
+}

@@ -1,0 +1,52 @@
+.error {
+        width: 60em;
+        margin-top: 2em;
+        color: white;
+        background-color: red;
+        text-align: center;
+        padding: 0.5em;
+        border-radius: 0.2em;
+        font-weight: bold;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        /*TODO: doesnt work, not even - because of width percentage??*/
+        transform: translate(-50%, 0);
+}
+
+.loading {
+        width: 30em;
+        color: white;
+        background-color: rgb(23, 27, 53);
+        text-align: center;
+        padding: 0.5em;
+        border-radius: 0.2em;
+        font-weight: bold;
+        animation-duration: 1s;
+        animation-name: pop-in;
+}
+
+@keyframes pop-in {
+        0%,
+        50% {
+                display: none;
+        }
+        51% {
+                display: block;
+        }
+}
+
+.users {
+        margin: 2em;
+        display: grid;
+        justify-content: center;
+        gap: 3em;
+}
+
+.users a {
+        text-decoration: none;
+}
+
+.users a:visited {
+        color: rgb(23, 27, 53);
+}

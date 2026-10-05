@@ -10,7 +10,6 @@
         position: absolute;
         top: 0;
         left: 50%;
-        /*TODO: doesnt work, not even - because of width percentage??*/
         transform: translate(-50%, 0);
 }
 
@@ -22,6 +21,18 @@
         padding: 0.5em;
         border-radius: 0.2em;
         font-weight: bold;
+        animation-duration: 1s;
+        animation-name: pop-in;
+}
+
+@keyframes pop-in {
+        0%,
+        50% {
+                display: none;
+        }
+        51% {
+                display: block;
+        }
 }
 
 .home {

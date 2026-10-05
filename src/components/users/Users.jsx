@@ -1,3 +1,5 @@
+import styles from "./Users.module.css";
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import Navbar from "../navbar/Navbar";
@@ -42,9 +44,17 @@ function Users() {
         return (
                 <>
                         <Navbar />
-                        <div>
-                                {error && <div>{error.message}</div>}
-                                {loading && <div>Loading...</div>}
+                        <div className={styles.users}>
+                                {error && (
+                                        <div className={styles.error}>
+                                                {error.message}
+                                        </div>
+                                )}
+                                {loading && (
+                                        <div className={styles.loading}>
+                                                Loading...
+                                        </div>
+                                )}
                                 {users.map((user) => {
                                         return (
                                                 <div

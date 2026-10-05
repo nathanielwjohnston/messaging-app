@@ -1,6 +1,8 @@
+import styles from "./User.module.css";
+
 function User({ user }) {
         return (
-                <div>
+                <div className={styles.user}>
                         <img
                                 src={user.profile.avatarUrl}
                                 alt={user.username + "'s picture"}
