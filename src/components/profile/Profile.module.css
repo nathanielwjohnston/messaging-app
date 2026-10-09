@@ -1,0 +1,83 @@
+.error {
+        width: 60em;
+        margin-top: 2em;
+        color: white;
+        background-color: red;
+        text-align: center;
+        padding: 0.5em;
+        border-radius: 0.2em;
+        font-weight: bold;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+}
+
+.loading {
+        width: 30em;
+        color: white;
+        background-color: rgb(23, 27, 53);
+        text-align: center;
+        padding: 0.5em;
+        border-radius: 0.2em;
+        font-weight: bold;
+        animation-duration: 1s;
+        animation-name: pop-in;
+}
+
+@keyframes pop-in {
+        0%,
+        50% {
+                display: none;
+        }
+        51% {
+                display: block;
+        }
+}
+
+.profile {
+        margin: 2em;
+}
+
+.idContainer {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        margin-bottom: 1em;
+}
+
+.setProfile img {
+        height: 5em;
+        width: 5em;
+        border-radius: 50%;
+        object-fit: cover;
+        background-color: white;
+}
+
+.stdButton {
+        margin-top: 2em;
+        background-color: rgb(23, 27, 53);
+        color: white;
+        border: 1px solid;
+        border-radius: 0.3em;
+}
+
+.stdButton:hover {
+        background-color: rgba(23, 27, 53, 0.585);
+}
+
+.cancelButton {
+        margin-top: 2em;
+        background-color: rgb(255, 0, 0);
+        color: white;
+        border: 1px solid;
+        border-radius: 0.3em;
+}
+
+.cancelButton:hover {
+        background-color: rgba(255, 0, 0, 0.585);
+}
+
+.editingProfile form {
+        width: 40%;
+}

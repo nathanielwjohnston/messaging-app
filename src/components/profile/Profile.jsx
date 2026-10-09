@@ -1,3 +1,5 @@
+import styles from "./Profile.module.css";
+
 import { useState, useEffect } from "react";
 import { useOutletContext, useLocation, useNavigate } from "react-router";
 import Navbar from "../navbar/Navbar";
@@ -120,24 +122,44 @@ function Profile() {
         return (
                 <>
                         <Navbar />
-                        <div>
-                                {error && <div>{error.message}</div>}
-                                {loading && <div>{loading}</div>}
+                        <div className={styles.profile}>
+                                {error && (
+                                        <div className={styles.error}>
+                                                {error.message}
+                                        </div>
+                                )}
+                                {loading && (
+                                        <div className={styles.loading}>
+                                                {loading}
+                                        </div>
+                                )}
                                 {!editing ? (
-                                        <div>
-                                                <img
-                                                        src={profile.avatarUrl}
-                                                        alt={
-                                                                profile.username +
-                                                                "'s profile picture"
+                                        <div className={styles.setProfile}>
+                                                <span
+                                                        className={
+                                                                styles.idContainer
                                                         }
-                                                />
-                                                <h1>{profile.username}</h1>
+                                                >
+                                                        <img
+                                                                src={
+                                                                        profile.avatarUrl
+                                                                }
+                                                                alt={
+                                                                        profile.username +
+                                                                        "'s profile picture"
+                                                                }
+                                                        />
+                                                        <h1>
+                                                                {
+                                                                        profile.username
+                                                                }
+                                                        </h1>
+                                                </span>
                                                 <p>{profile.age}</p>
                                                 <p>{profile.bio}</p>
                                         </div>
                                 ) : (
-                                        <div>
+                                        <div className={styles.editingProfile}>
                                                 <form>
                                                         <label>
                                                                 Change profile
@@ -190,12 +212,18 @@ function Profile() {
                                         </div>
                                 )}
                                 {!ownsProfile && (
-                                        <button onClick={startChat}>
+                                        <button
+                                                onClick={startChat}
+                                                className={styles.stdButton}
+                                        >
                                                 Chat!
                                         </button>
                                 )}
                                 {ownsProfile && !editing && (
-                                        <button onClick={editProfile}>
+                                        <button
+                                                onClick={editProfile}
+                                                className={styles.stdButton}
+                                        >
                                                 Edit
                                         </button>
                                 )}
@@ -205,10 +233,18 @@ function Profile() {
                                                         onClick={
                                                                 updateUserProfile
                                                         }
+                                                        className={
+                                                                styles.stdButton
+                                                        }
                                                 >
                                                         Update
                                                 </button>
-                                                <button onClick={cancelEdit}>
+                                                <button
+                                                        onClick={cancelEdit}
+                                                        className={
+                                                                styles.cancelButton
+                                                        }
+                                                >
                                                         Cancel
                                                 </button>
                                         </>
