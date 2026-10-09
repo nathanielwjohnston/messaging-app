@@ -1,0 +1,37 @@
+.chat {
+        margin: 2em;
+        display: grid;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+}
+
+.chat .heading {
+        place-self: center;
+        text-decoration: none;
+        color: rgb(23, 27, 53);
+        position: fixed;
+        top: 0;
+        margin-top: 10em;
+}
+
+.chat .heading:hover {
+        text-decoration: underline;
+}
+.chatOuter {
+        height: 100vh;
+        position: relative;
+}
+
+.messages {
+        display: grid;
+        gap: 2em;
+        margin-bottom: 10em;
+        margin-top: 12em;
+        overflow-anchor: none;
+}
+
+.anchor {
+        overflow-anchor: auto;
+        height: 1px;
+}

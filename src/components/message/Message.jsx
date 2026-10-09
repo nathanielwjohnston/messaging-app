@@ -1,3 +1,5 @@
+import styles from "./Message.module.css";
+
 function getMessageDate(date) {
         let day = date.getDate();
         let month = date.getMonth() + 1;
@@ -22,15 +24,18 @@ function Message({ message, userId }) {
         const date = new Date(message.createdAt);
         const formattedDate = getMessageDate(date);
         let user;
+        let ownsMessage;
 
         if (message.user.id === userId) {
                 user = "You";
+                ownsMessage = true;
         } else {
                 user = message.user.username;
+                ownsMessage = false;
         }
 
         return (
-                <div>
+                <div className={ownsMessage ? styles.right : styles.left}>
                         <h3>{user}</h3> <span>{formattedDate}</span>
                         <p>{message.content}</p>
                 </div>

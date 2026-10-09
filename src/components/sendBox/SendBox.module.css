@@ -1,0 +1,29 @@
+.send {
+        position: fixed;
+        bottom: 0;
+        padding: 2em;
+        padding-bottom: 4em;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        gap: 1em;
+        background-color: white;
+}
+
+.send input {
+        width: 40vw;
+        height: 2em;
+        padding: 0.2em 0.5em;
+}
+
+button {
+        background-color: rgb(23, 27, 53);
+        color: white;
+        border: 1px solid;
+        border-radius: 0.3em;
+        height: 2em;
+}
+
+button:hover {
+        background-color: rgba(23, 27, 53, 0.585);
+}

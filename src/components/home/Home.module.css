@@ -40,6 +40,7 @@
         display: grid;
         justify-content: center;
         gap: 3em;
+        margin-top: 12em;
 }
 
 .home a {

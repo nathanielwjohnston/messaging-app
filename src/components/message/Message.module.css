@@ -1,0 +1,40 @@
+.right {
+        justify-self: right;
+}
+
+.left {
+        justify-self: left;
+}
+
+h3 {
+        grid-area: user;
+        font-size: 100%;
+}
+
+span {
+        grid-area: timestamp;
+        display: grid;
+        font-style: italic;
+        text-align: right;
+}
+
+p {
+        grid-area: content;
+}
+
+.left,
+.right {
+        display: grid;
+        grid-template-columns: min-content 1fr;
+        grid-template-areas:
+                "user timestamp"
+                "content content";
+        column-gap: 1em;
+        row-gap: 0.5em;
+        border: 1px solid rgb(23, 27, 53);
+        background-color: rgb(23, 27, 53);
+        color: white;
+        border-radius: 0.2em;
+        padding: 0.8em;
+        width: 35vw;
+}

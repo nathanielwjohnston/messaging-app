@@ -1,3 +1,5 @@
+import styles from "./Chat.module.css";
+
 import { useState, useEffect } from "react";
 import { useOutletContext, useLocation, Link } from "react-router";
 import Navbar from "../navbar/Navbar";
@@ -49,6 +51,8 @@ function Chat() {
                                 setError(new Error(err));
                         }
                         setLoading(false);
+
+                        await window.scrollTo(0, document.body.scrollHeight);
                 };
 
                 fetchChat();
@@ -66,6 +70,8 @@ function Chat() {
                         setError(new Error(err));
                 }
                 setLoading(false);
+
+                await window.scrollTo(0, document.body.scrollHeight);
         }
 
         function updateMessage(e) {
@@ -73,44 +79,50 @@ function Chat() {
         }
 
         return (
-                <>
+                <div className={styles.chatOuter}>
                         <Navbar></Navbar>
-                        <div>
+                        <div className={styles.chat}>
                                 <Link
                                         to={
                                                 "/users/" +
                                                 otherUser.id +
                                                 "/profile"
                                         }
+                                        className={styles.heading}
                                 >
                                         <h1>{chat && otherUser.username}</h1>
                                 </Link>
 
                                 {error && <div>{error.message}</div>}
                                 {loading && <div>{loading}</div>}
-                                {messages.map((message) => {
-                                        return (
-                                                <div key={message.id}>
-                                                        <Message
-                                                                message={
-                                                                        message
-                                                                }
-                                                                userId={userId}
-                                                        />
-                                                </div>
-                                        );
-                                })}
-                                <SendBox
-                                        message={message}
-                                        updateMessage={(e) => {
-                                                updateMessage(e);
-                                        }}
-                                        sendMessage={(message) => {
-                                                sendMessageToUser(message);
-                                        }}
-                                />
+                                <div className={styles.messages}>
+                                        {messages.map((message) => {
+                                                return (
+                                                        <div key={message.id}>
+                                                                <Message
+                                                                        message={
+                                                                                message
+                                                                        }
+                                                                        userId={
+                                                                                userId
+                                                                        }
+                                                                />
+                                                        </div>
+                                                );
+                                        })}
+                                </div>
+                                <div className={styles.anchor}></div>
                         </div>
-                </>
+                        <SendBox
+                                message={message}
+                                updateMessage={(e) => {
+                                        updateMessage(e);
+                                }}
+                                sendMessage={(message) => {
+                                        sendMessageToUser(message);
+                                }}
+                        />
+                </div>
         );
 }
 
