@@ -1,3 +1,32 @@
+.error {
+        width: 40em;
+        margin-top: 2em;
+        color: white;
+        background-color: red;
+        text-align: center;
+        padding: 0.5em;
+        border-radius: 0.2em;
+        font-weight: bold;
+        position: fixed;
+        top: 5em;
+        left: 50%;
+        transform: translate(-50%, 0);
+}
+
+.loading {
+        width: 30em;
+        color: white;
+        background-color: rgb(23, 27, 53);
+        text-align: center;
+        padding: 0.5em;
+        border-radius: 0.2em;
+        font-weight: bold;
+        animation-duration: 1s;
+        animation-name: pop-in;
+        place-self: center;
+        margin-top: 30em;
+}
+
 .chat {
         margin: 2em;
         display: grid;

@@ -62,8 +62,6 @@ getProfile.mockImplementation((userId) => {
         };
 });
 
-// TODO: test chat button
-
 describe("Profile component", () => {
         beforeEach(() => {
                 useOutletContext.mockReturnValue({ userId: "1" });

@@ -1,5 +1,5 @@
 .error {
-        width: 60em;
+        width: 40em;
         margin-top: 2em;
         color: white;
         background-color: red;
@@ -7,8 +7,8 @@
         padding: 0.5em;
         border-radius: 0.2em;
         font-weight: bold;
-        position: absolute;
-        top: 0;
+        position: fixed;
+        top: 5em;
         left: 50%;
         transform: translate(-50%, 0);
 }
@@ -23,6 +23,8 @@
         font-weight: bold;
         animation-duration: 1s;
         animation-name: pop-in;
+        place-self: center;
+        margin-top: 20em;
 }
 
 @keyframes pop-in {

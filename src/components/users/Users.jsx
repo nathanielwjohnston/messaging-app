@@ -19,11 +19,10 @@ function Users() {
                                 const res = await getUsers();
                                 const users = await res.json();
                                 setUsers(users);
-                                setLoading(false);
                         } catch (err) {
                                 setError(new Error(err));
-                                setLoading(false);
                         }
+                        setLoading(false);
                 };
 
                 fetchUsers();
@@ -55,20 +54,30 @@ function Users() {
                                                 Loading...
                                         </div>
                                 )}
-                                {users.map((user) => {
-                                        return (
-                                                <div
-                                                        key={user.id}
-                                                        onClick={() => {
-                                                                startChat(
-                                                                        user.id,
-                                                                );
-                                                        }}
-                                                >
-                                                        <User user={user} />
-                                                </div>
-                                        );
-                                })}
+                                {!loading && (
+                                        <>
+                                                {users.map((user) => {
+                                                        return (
+                                                                <div
+                                                                        key={
+                                                                                user.id
+                                                                        }
+                                                                        onClick={() => {
+                                                                                startChat(
+                                                                                        user.id,
+                                                                                );
+                                                                        }}
+                                                                >
+                                                                        <User
+                                                                                user={
+                                                                                        user
+                                                                                }
+                                                                        />
+                                                                </div>
+                                                        );
+                                                })}
+                                        </>
+                                )}
                         </div>
                 </>
         );

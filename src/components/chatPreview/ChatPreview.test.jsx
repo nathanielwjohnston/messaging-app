@@ -38,7 +38,7 @@ describe("Chat Preview component", () => {
         it("shows part of the last message sent", () => {
                 render(<ChatPreview chat={chat} userId={userId} />);
 
-                const message = screen.getByText("You: No problem ...");
+                const message = screen.getByText("You: No problem :) ...");
 
                 expect(message).toBeInTheDocument();
         });

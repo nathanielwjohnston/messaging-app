@@ -11,7 +11,7 @@ function Chat() {
         const { userId } = useOutletContext();
 
         const [loading, setLoading] = useState("Loading...");
-        const [error, setError] = useState(false);
+        const [error, setError] = useState();
 
         const [chat, setChat] = useState(null);
         const [messages, setMessages] = useState([]);
@@ -47,6 +47,7 @@ function Chat() {
                                         (user) => user.id !== userId,
                                 );
                                 setOtherUser(recipient);
+                                setError(false);
                         } catch (err) {
                                 setError(new Error(err));
                         }
@@ -65,6 +66,7 @@ function Chat() {
                         const newMessage = await res.json();
                         setMessages([...messages, newMessage]);
                         setMessage("");
+                        setError(false);
                 } catch (err) {
                         setMessage(message);
                         setError(new Error(err));
@@ -93,24 +95,39 @@ function Chat() {
                                         <h1>{chat && otherUser.username}</h1>
                                 </Link>
 
-                                {error && <div>{error.message}</div>}
-                                {loading && <div>{loading}</div>}
-                                <div className={styles.messages}>
-                                        {messages.map((message) => {
-                                                return (
-                                                        <div key={message.id}>
-                                                                <Message
-                                                                        message={
-                                                                                message
+                                {error && (
+                                        <div className={styles.error}>
+                                                {error.message}
+                                        </div>
+                                )}
+                                {loading && (
+                                        <div className={styles.loading}>
+                                                {loading}
+                                        </div>
+                                )}
+                                {!loading && (
+                                        <div className={styles.messages}>
+                                                {messages.map((message) => {
+                                                        return (
+                                                                <div
+                                                                        key={
+                                                                                message.id
                                                                         }
-                                                                        userId={
-                                                                                userId
-                                                                        }
-                                                                />
-                                                        </div>
-                                                );
-                                        })}
-                                </div>
+                                                                >
+                                                                        <Message
+                                                                                message={
+                                                                                        message
+                                                                                }
+                                                                                userId={
+                                                                                        userId
+                                                                                }
+                                                                        />
+                                                                </div>
+                                                        );
+                                                })}
+                                        </div>
+                                )}
+
                                 <div className={styles.anchor}></div>
                         </div>
                         <SendBox

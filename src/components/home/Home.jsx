@@ -19,11 +19,10 @@ function Home() {
                                 const res = await getUsersChats(userId);
                                 const usersChats = await res.json();
                                 setChats(usersChats);
-                                setLoading(false);
                         } catch (err) {
                                 setError(new Error(err));
-                                setLoading(false);
                         }
+                        setLoading(false);
                 };
 
                 getChats();
@@ -43,19 +42,32 @@ function Home() {
                                                 Loading...
                                         </div>
                                 )}
-                                {chats.map((chat) => {
-                                        return (
-                                                <Link
-                                                        to={"/chats/" + chat.id}
-                                                        key={chat.id}
-                                                >
-                                                        <ChatPreview
-                                                                chat={chat}
-                                                                userId={userId}
-                                                        />
-                                                </Link>
-                                        );
-                                })}
+                                {!loading && (
+                                        <>
+                                                {chats.map((chat) => {
+                                                        return (
+                                                                <Link
+                                                                        to={
+                                                                                "/chats/" +
+                                                                                chat.id
+                                                                        }
+                                                                        key={
+                                                                                chat.id
+                                                                        }
+                                                                >
+                                                                        <ChatPreview
+                                                                                chat={
+                                                                                        chat
+                                                                                }
+                                                                                userId={
+                                                                                        userId
+                                                                                }
+                                                                        />
+                                                                </Link>
+                                                        );
+                                                })}
+                                        </>
+                                )}
                         </div>
                 </>
         );
